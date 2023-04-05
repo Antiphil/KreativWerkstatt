@@ -1,4 +1,5 @@
 <script>
+  import ph1 from "$lib/assets/images/placeholder/1.jpeg"
 	import { sidebarOpen } from '$lib/stores/sidebar.js';
   import "../app.css"
   import logo from '$lib/assets/images/kreativ.png'
@@ -32,15 +33,15 @@
     <div class="w-full h-full bg-primary-400 rounded-3xl p-3">
       <div class="flex justify-between items-start h-14">
         <div class="">
-          <h1 class="text-lg">Ton-Kugel mit Blumenmuster</h1>
-          <p class="text-xs">Richard Schlagmichtot </p>
+          <h1 class="text-lg text-white font-bold">Ton-Kugel mit Blumenmuster</h1>
+          <p class="text-xs text-white font-bold">Künstler: Richard Brettschneider</p>
         </div>
         <button on:click={() => sidebarOpen.set(false)}>
-          <i class="fa-solid fa-xmark text-2xl"></i>
+          <i class="fa-solid fa-xmark text-white text-2xl"></i>
         </button>
       </div>
-      <div class="bg-white w-full h-[calc(100%-56px)] rounded-3xl overflow-hidden">
-        <img class="w-full h-full object-cover object-center" src="https://scontent-fra3-1.xx.fbcdn.net/v/t39.30808-6/332382338_456373433279929_7046674678091417698_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=730e14&_nc_ohc=vyFBkyx8uOEAX8t2uNa&_nc_ht=scontent-fra3-1.xx&oh=00_AfBFaKVhhEtopqnTIMu4X6wlPA2LS6JRmY0dnnqiJscadw&oe=63FE5D60" alt="">
+      <div class="bg-white p-1 w-full h-[calc(100%-56px)] rounded-3xl overflow-hidden">
+        <img class="w-full rounded-3xl h-full object-cover object-center" src={ph1} alt="">
       </div>
     </div>
   </div>

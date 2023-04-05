@@ -1,6 +1,8 @@
 <script>
   import Button from "../lib/components/button.svelte";
   import halfHero from '$lib/assets/images/halfHero.png'
+    import Highlights from "../lib/components/highlights.svelte";
+    import Imagegrid from "../lib/components/imagegrid.svelte";
 </script>
 
 <section class="relative h-[calc(100vh-53px)] z-[1] w-full flex flex-col justify-center p-5 overflow-hidden">
@@ -18,22 +20,6 @@
   </Button>
 </section>
 
-<section class="bg-orange-100">
-  <div class="py-8 px-4 mx-auto max-w-screen-xl text-center lg:py-16 lg:px-12">
-    <p class="font-semibold text-sm flex items-center">
-      <span class="text-primary text-xs">#</span>
-      <span>highlights</span>
-    </p>
-  </div>
-  <p>lorem</p>
-  <p>lorem</p>
-  <p>lorem</p>
-  <p>lorem</p>
-  <p>lorem</p>
-  <p>lorem</p>
-  <p>lorem</p>
-  <p>lorem</p>
-  <p>lorem</p>
-  <p>lorem</p>
-  <p>lorem</p>
-</section>
+
+
+<Imagegrid />
