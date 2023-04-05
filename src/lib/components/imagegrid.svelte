@@ -8,8 +8,8 @@
     import Image from "./image.svelte";
 </script>
 
-<div class="flex flex-wrap px-1">
-    <div class="column flex-[0_0_50%] px-1 [&>img]:mt-2 [&>img]:align-middle">
+<div class="row">
+    <div class="column">
         <Image img={ph1} />
         <Image img={ph2} />
         <Image img={ph3} />
@@ -17,32 +17,58 @@
         <Image img={ph5} />
         <Image img={ph6} />
     </div>
-    <div class="column flex-[0_0_50%] px-1 [&>img]:mt-2 [&>img]:align-middle">
+    <div class="column">
         <Image img={ph4} />
         <Image img={ph1} />
         <Image img={ph6} />
         <Image img={ph5} />
         <Image img={ph2} />
         <Image img={ph3} />
+    </div>
+    <div class="column">
+        <Image img={ph2} />
+        <Image img={ph5} />
+        <Image img={ph1} />
+        <Image img={ph3} />
+        <Image img={ph2} />
+        <Image img={ph3} />
+    </div>
+    <div class="column">
+        <Image img={ph4} />
+        <Image img={ph5} />
+        <Image img={ph6} />
+        <Image img={ph5} />
+        <Image img={ph2} />
+        <Image img={ph1} />
     </div>
 </div>
 
 <style>
-    .column > :global(button) {
-		margin-top: 8px;
-        vertical-align: middle;
-        width: 100%;
-	}
-    @media screen and (max-width: 800px) {
-    .column {
-        flex: 50%;
-        max-width: 50%;
-    }
-    }
-    @media screen and (max-width: 600px) {
-    .column {
-        flex: 100%;
-        max-width: 100%;
-    }
-    }
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0 4px;
+}
+.column {
+  flex: 25%;
+  max-width: 25%;
+  padding: 0 4px;
+}
+.column > :global(button) {
+  margin-top: 8px;
+  vertical-align: middle;
+  width: 100%;
+}
+@media screen and (max-width: 800px) {
+  .column {
+    flex: 50%;
+    max-width: 50%;
+  }
+}
+@media screen and (max-width: 600px) {
+  .column {
+    flex: 100%;
+    max-width: 100%;
+  }
+}
 </style>

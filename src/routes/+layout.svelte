@@ -3,12 +3,12 @@
 	import { sidebarOpen } from '$lib/stores/sidebar.js';
   import "../app.css"
   import logo from '$lib/assets/images/kreativ.png'
-
-  import { fly, fade } from 'svelte/transition';
+  import { fade, fly } from 'svelte/transition';
   import Button from "$lib/components/button.svelte";
   import { Hamburger } from 'svelte-hamburgers';
   import { goto } from '$app/navigation';
   import { page } from '$app/stores';
+  import { imgOpen } from "../lib/stores/imgmodal";
 
   let imageModal = false
   let open = false;
@@ -28,15 +28,15 @@
 
 </script>
 
-{#if imageModal}
-  <div class="fixed z-50 w-full h-full bg-[rgba(0,0,0,0.8)] p-5">
+{#if $imgOpen}
+  <div transition:fade class="fixed z-50 w-full h-full bg-[rgba(0,0,0,0.8)] p-5">
     <div class="w-full h-full bg-primary-400 rounded-3xl p-3">
       <div class="flex justify-between items-start h-14">
         <div class="">
           <h1 class="text-lg text-white font-bold">Ton-Kugel mit Blumenmuster</h1>
           <p class="text-xs text-white font-bold">Künstler: Richard Brettschneider</p>
         </div>
-        <button on:click={() => sidebarOpen.set(false)}>
+        <button on:click={() => imgOpen.set(false)}>
           <i class="fa-solid fa-xmark text-white text-2xl"></i>
         </button>
       </div>
@@ -74,9 +74,9 @@
   </div>
 {/if}
 <div class="fixed w-full z-10 bg-white border-b-[1px] border-primary-700 flex justify-between items-center px-3">
-  <div class="h-full py-3">
+  <a href="/" class="h-full py-3">
     <img class="h-7" src={logo} alt="">
-  </div>
+  </a>
   <div class="flex items-center gap-4">
     <div class="flex gap-2">
       <a href="https://www.facebook.com/KreativWerkstattMeiningen/" target="_blank" rel="noreferrer"><i class="text-sm fa-brands fa-facebook hover:text-orange-500 transition"></i></a>
