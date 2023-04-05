@@ -29,7 +29,7 @@
 </script>
 
 {#if $imgOpen}
-  <div transition:fade class="fixed z-50 w-full h-full bg-[rgba(0,0,0,0.8)] p-5">
+  <div transition:fade class="fixed z-50 w-full h-full bg-[rgba(0,0,0,0.8)] p-1">
     <div class="w-full h-full bg-primary-400 rounded-3xl p-3">
       <div class="flex justify-between items-start h-14">
         <div class="">
