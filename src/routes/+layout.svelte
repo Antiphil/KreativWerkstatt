@@ -1,6 +1,4 @@
 <script>
-  import ph1 from "$lib/assets/images/placeholder/1.jpeg"
-	import { sidebarOpen } from '$lib/stores/sidebar.js';
   import "../app.css"
   import logo from '$lib/assets/images/kreativ.png'
   import { fade, fly } from 'svelte/transition';
@@ -8,7 +6,7 @@
   import { Hamburger } from 'svelte-hamburgers';
   import { goto } from '$app/navigation';
   import { page } from '$app/stores';
-  import { imgOpen } from "../lib/stores/imgmodal";
+  import { imgOpen, imgSrc } from "../lib/stores/imgmodal";
 
   let imageModal = false
   let open = false;
@@ -41,7 +39,7 @@
         </button>
       </div>
       <div class="bg-white p-1 w-full h-[calc(100%-56px)] rounded-3xl overflow-hidden">
-        <img class="w-full rounded-3xl h-full object-cover object-center" src={ph1} alt="">
+        <img class="w-full rounded-3xl h-full object-cover object-center" src={$imgSrc} alt="">
       </div>
     </div>
   </div>
