@@ -2,32 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer components {
-
-}
-
 body {
-    /* font-family: 'Shantell Sans', cursive; */
-    font-family: 'Poppins', sans-serif;
-    height: 100vh;
-    width: 100%;
-    color: #24252b;
+	height: 100vh;
+	width: 100%;
 }
-body > #app {
-    height: 100%;
-    width: 100%;
-}
-
-::-webkit-scrollbar {
-    width: 6px;
-    background: rgb(12,14,23);
-}
-::-webkit-scrollbar-track {
-    background: rgb(12,14,23);
-    border-radius: 50%;
-}
-::-webkit-scrollbar-thumb {
-    background: #de923b;
-    border-radius: 20px;
-    width: 4px;
+body > div {
+	height: 100vh;
+	width: 100%;
 }
