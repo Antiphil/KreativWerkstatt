@@ -21,7 +21,7 @@
 
 			<div class="mt-4">
 				<div class="flex justify-between">
-					<label class="block mb-2 text-sm font-medium text-gray-600" for="loggingPassword">Password</label>
+					<label class="block mb-2 text-sm font-medium text-gray-600" for="loggingPassword">Passwort</label>
 				</div>
 
 				<input id="loggingPassword" class="block w-full px-4 py-2 text-gray-700 bg-white border rounded-lg focus:border-blue-400 focus:ring-opacity-40 focus:outline-none focus:ring focus:ring-blue-300" type="password" />
