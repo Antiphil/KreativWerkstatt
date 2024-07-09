@@ -1,11 +1,11 @@
 <script>
 	// @ts-nocheck
-	let files_array = [];
+	/* let files_array = [];
 	let file_input;
 	let images = [];
 	let index;
-
-	const handleUpload = () => {
+ */
+	/* const handleUpload = () => {
 		files_array = [...files_array, ...file_input.files];
 		Promise.all(files_array.map(readImages)).then((values) => {
 			images = values;
@@ -29,11 +29,11 @@
 		images.splice(index, 1);
 		files_array = files_array;
 		images = images;
-	};
+	}; */
 </script>
 
 <div class="mt-10">
-	<form action="?/upload" method="POST">
+	<form action="?/upload" method="POST" enctype="multipart/form-data">
 		<div class="flex items-center justify-center">
 			<div class="mx-auto w-full max-w-3xl">
 				<p class=" block text-xl font-semibold text-[#07074D]">Bild Informationen</p>
@@ -41,24 +41,24 @@
 				<div class="mb-5">
 					<label for="title" class="block text-base font-medium text-[#07074D]"> Titel des Produkts </label>
 					<label for="title" class="mb-3 block text-sm font-medium text-[#6B7280]"> Gib den Produkt einen pasenden Namen </label>
-					<input type="text" name="title" id="title" placeholder="Beispiel: Tonkugel mit Blumenmuster" class="w-full rounded-md border border-[#cecece] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+					<input type="text" name="title" id="title" value="test" placeholder="Beispiel: Tonkugel mit Blumenmuster" class="w-full rounded-md border border-[#cecece] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
 				</div>
 				<div class="mb-5">
 					<label for="artist" class="block text-base font-medium text-[#07074D]"> Name der beteiligten Beschäftigten </label>
 					<label for="artist" class="mb-3 block text-sm font-medium text-[#6B7280]"> Bitte gib an, wer am Produkt mitgearbeitet hat </label>
-					<input type="text" name="artist" id="artist" placeholder="Beispiel: Richard Brettschneider, Sebastian Zapf" class="w-full rounded-md border border-[#cecece] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+					<input type="text" name="artist" id="artist" value="test" placeholder="Beispiel: Richard Brettschneider, Sebastian Zapf" class="w-full rounded-md border border-[#cecece] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
 				</div>
 				<div class="mb-6 pt-4">
 					<p class=" block text-xl font-semibold text-[#07074D]">Bilder Hochladen</p>
 					<label for="file" class="mb-5 block text-sm font-medium text-[#6B7280]"> Wähle bis zu 4 Bilder des Produktes das du hochladen möchtest </label>
 
 					<div class="mb-8">
-						<input type="file" name="file" id="file" accept=".png, .jpg, .jpeg" style="display: none" bind:this={file_input} multiple onclick="this.value=null;" on:change={handleUpload} />
+						<input type="file" name="file" id="file" accept=".png, .jpg, .jpeg" style="display: none" onclick="this.value=null;" />
 						<label for="file" class="relative flex min-h-[200px] items-center justify-center rounded-md border-2 border-dashed border-[#cecece] p-12 text-center">
 							<div>
 								<span class="inline-flex rounded border border-[#cecece] py-2 px-7 text-base font-medium text-[#07074D] hover:bg-[#6A64F1] cursor-pointer hover:text-white transition-all"> Bilder Auswählen </span>
 								<div class="flex flex-col gap-3 justify-center">
-									{#if files_array && files_array[0]}
+									<!-- {#if files_array && files_array[0]}
 										<div class="flex justify-center mt-5 gap-3 [&>div]:first:border-4 first:[&>div]:border-red-500">
 											{#each files_array as file, i}
 												<div class="w-24 h-24 border rounded-lg relative">
@@ -68,7 +68,7 @@
 											{/each}
 										</div>
 										<span class="">Das erste Bild mit dem roten Rahmen dient als Vorschaubild für das ganze Produkt</span>
-									{/if}
+									{/if} -->
 								</div>
 							</div>
 						</label>
