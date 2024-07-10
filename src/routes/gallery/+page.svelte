@@ -1,15 +1,3 @@
-<!-- <script lang="ts">
-	export let data;
-
-	console.log(data);
-</script>
-
-<div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-7xl m-auto mt-20">
-	{#each data.feed as item}
-		<img class="h-auto max-w-full rounded-lg" src="/uploads/{item.id}/1.png" alt="" />
-	{/each}
-</div> -->
-
 <script lang="ts">
 	export let data;
 	const images = data.feed;
