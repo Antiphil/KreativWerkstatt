@@ -1,15 +1,14 @@
-// src/routes/+page.server.ts
-
+import fs from 'fs/promises';
+import path from 'path';
 import prisma from '$lib/prisma';
 import type { PageServerLoad } from './$types';
 
 export const load = (async () => {
-	// 1.
+
 	const response = await prisma.post.findMany({
 		where: { published: true }
 	});
 
-	// 2.
 	return { feed: response };
 }) satisfies PageServerLoad;
 
@@ -18,11 +17,19 @@ export const actions = {
 		const data = await request.formData()
 		const id = data.get('id')
 
-		console.log(id)
-		const deleteUser = await prisma.post.delete({
-			where: {
-			  id
-			},
-		  })
+		const filePath = path.join(process.cwd(), 'static', 'uploads', `${id}`)
+
+		try {
+			fs.rm(filePath, { recursive: true })
+			await prisma.post.delete({
+				where: {
+				id
+				},
+			})
+		} catch (error) {
+			console.log(error)
+		}
+		
+		
 	}
 };
