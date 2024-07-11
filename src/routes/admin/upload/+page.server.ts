@@ -7,17 +7,27 @@ import * as fa from 'fs';
 import fs from 'fs/promises';
 
 export const actions = {
-	upload: async ({ request }: any) => {
-		const data = Object.fromEntries(await request.formData());
-		const uid = crypto.randomUUID();
+	default: async ({ request }: any) => {
+		console.log('test');
+		const data = await request.formData();
+		/* 		console.log(data);
+		let fileArray = Object.values(Object);
+		fileArray.forEach((element: any) => {
+			console.log(element);
+		}); */
+		const files = data.getAll('images');
+		console.log(files);
 
-		fa.mkdirSync(`static/uploads/${uid}`, { recursive: true });
+		//const uid = crypto.randomUUID();
 
-		const filePath = path.join(process.cwd(), 'static', 'uploads', `${uid}`, `1.${(data.file as Blob).type.split('/')[1]}`);
-		const dbPath = path.join('static', 'uploads', `${uid}`, `1.${(data.file as Blob).type.split('/')[1]}`);
+		//fa.mkdirSync(`static/uploads/${uid}`, { recursive: true });
+
+		//const filePath = path.join(process.cwd(), 'static', 'uploads', `${uid}`, `1.${(data.file as Blob).type.split('/')[1]}`);
+		//const dbPath = path.join('static', 'uploads', `${uid}`, `1.${(data.file as Blob).type.split('/')[1]}`);
 
 		try {
-			await fs.writeFile(filePath, Buffer.from(await (data.file as Blob).arrayBuffer()));
+			console.log('upload');
+			/* await fs.writeFile(filePath, Buffer.from(await (data.file as Blob).arrayBuffer()));
 			await prisma.post.create({
 				data: {
 					id: uid,
@@ -25,7 +35,7 @@ export const actions = {
 					artists: data.artist,
 					imageid: dbPath
 				}
-			});
+			}); */
 		} catch (error) {
 			console.error(error);
 		}

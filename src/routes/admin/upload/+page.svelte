@@ -1,84 +1,76 @@
-<script>
-	// @ts-nocheck
-	/* let files_array = [];
-	let file_input;
-	let images = [];
-	let index;
- */
-	/* const handleUpload = () => {
-		files_array = [...files_array, ...file_input.files];
-		Promise.all(files_array.map(readImages)).then((values) => {
-			images = values;
-		});
-	};
-	const readImages = (file) => {
+<script lang="ts">
+	import { createEventDispatcher } from 'svelte';
+
+	let preview: string[] = [];
+	let files: File[] = [];
+	let loading = false;
+	const dispatch = createEventDispatcher();
+
+	const getBase64 = (file: File): Promise<string | ArrayBuffer | null> => {
 		return new Promise((resolve, reject) => {
-			let fr = new FileReader();
-			fr.onload = () => {
-				resolve(fr.result);
-			};
-			fr.onerror = () => {
-				reject(fr);
-			};
-			fr.readAsDataURL(file);
+			const reader = new FileReader();
+			reader.readAsDataURL(file);
+			reader.onload = () => resolve(reader.result);
+			reader.onerror = (error) => reject(error);
 		});
 	};
-	const removeImage = (i) => {
-		index = i;
-		files_array.splice(index, 1);
-		images.splice(index, 1);
-		files_array = files_array;
-		images = images;
-	}; */
+
+	const handleFiles = async (event: Event) => {
+		loading = true;
+		const input = event.target as HTMLInputElement;
+		const selectedFiles = input.files;
+		if (selectedFiles) {
+			const filesArray = Array.from(selectedFiles);
+			files = files.concat(filesArray);
+			const base64Array = await Promise.all(filesArray.map((file) => getBase64(file)));
+			preview = preview.concat(base64Array as string[]);
+		}
+		loading = false;
+	};
+
+	const removeImage = (index: number) => {
+		preview.splice(index, 1);
+		files.splice(index, 1);
+		preview = [...preview]; // to trigger reactivity
+	};
+
+	const submitImages = async () => {
+		const formData = new FormData();
+		files.forEach((file) => formData.append('images', file));
+
+		try {
+			const response = await fetch('/admin/upload', {
+				method: 'POST',
+				body: formData
+			});
+
+			if (response.ok) {
+				const result = await response.json();
+				console.log('Upload successful:', result);
+				dispatch('uploadSuccess', result);
+			} else {
+				console.error('Upload failed:', response.statusText);
+			}
+		} catch (error) {
+			console.error('Error uploading images:', error);
+		}
+	};
 </script>
 
-<div class="mt-10">
-	<form action="?/upload" method="POST" enctype="multipart/form-data">
-		<div class="flex items-center justify-center">
-			<div class="mx-auto w-full max-w-3xl">
-				<p class=" block text-xl font-semibold text-[#07074D]">Bild Informationen</p>
-				<p class="mb-5 block text-sm font-medium text-[#6B7280]">Bitte bedenke das du hier nur ein einzelnes Produkt vorstellst. Gib also immer nur verschiedene Bilder vom selben Produkt an!</p>
-				<div class="mb-5">
-					<label for="title" class="block text-base font-medium text-[#07074D]"> Titel des Produkts </label>
-					<label for="title" class="mb-3 block text-sm font-medium text-[#6B7280]"> Gib den Produkt einen pasenden Namen </label>
-					<input type="text" name="title" id="title" value="test" placeholder="Beispiel: Tonkugel mit Blumenmuster" class="w-full rounded-md border border-[#cecece] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+<input type="file" name="file" id="file" multiple on:change={handleFiles} />
+{#await Promise.resolve(loading) then}
+	{#if loading}
+		<p>Loading...</p>
+	{/if}
+	{#if !loading && preview.length > 0}
+		<div>
+			{#each preview as image, index}
+				<div style="display: inline-block; position: relative;">
+					<img src={image} alt="Preview" style="max-width: 200px; max-height: 200px;" />
+					<button on:click={() => removeImage(index)} style="position: absolute; top: 5px; right: 5px;">Delete</button>
 				</div>
-				<div class="mb-5">
-					<label for="artist" class="block text-base font-medium text-[#07074D]"> Name der beteiligten Beschäftigten </label>
-					<label for="artist" class="mb-3 block text-sm font-medium text-[#6B7280]"> Bitte gib an, wer am Produkt mitgearbeitet hat </label>
-					<input type="text" name="artist" id="artist" value="test" placeholder="Beispiel: Richard Brettschneider, Sebastian Zapf" class="w-full rounded-md border border-[#cecece] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
-				</div>
-				<div class="mb-6 pt-4">
-					<p class=" block text-xl font-semibold text-[#07074D]">Bilder Hochladen</p>
-					<label for="file" class="mb-5 block text-sm font-medium text-[#6B7280]"> Wähle bis zu 4 Bilder des Produktes das du hochladen möchtest </label>
-
-					<div class="mb-8">
-						<input type="file" name="file" id="file" accept=".png, .jpg, .jpeg" style="display: none" onclick="this.value=null;" />
-						<label for="file" class="relative flex min-h-[200px] items-center justify-center rounded-md border-2 border-dashed border-[#cecece] p-12 text-center">
-							<div>
-								<span class="inline-flex rounded border border-[#cecece] py-2 px-7 text-base font-medium text-[#07074D] hover:bg-[#6A64F1] cursor-pointer hover:text-white transition-all"> Bilder Auswählen </span>
-								<div class="flex flex-col gap-3 justify-center">
-									<!-- {#if files_array && files_array[0]}
-										<div class="flex justify-center mt-5 gap-3 [&>div]:first:border-4 first:[&>div]:border-red-500">
-											{#each files_array as file, i}
-												<div class="w-24 h-24 border rounded-lg relative">
-													<img class="w-full h-full object-cover rounded-lg" src={images[i]} alt="preview" />
-													<button type="button" class="text-red-400 fa-solid fa-trash absolute top-1 right-1" on:click={() => removeImage(i)}></button>
-												</div>
-											{/each}
-										</div>
-										<span class="">Das erste Bild mit dem roten Rahmen dient als Vorschaubild für das ganze Produkt</span>
-									{/if} -->
-								</div>
-							</div>
-						</label>
-					</div>
-				</div>
-
-				<div>
-					<button class="hover:shadow-form w-full rounded-md bg-[#6A64F1] py-3 px-8 text-center text-base font-semibold text-white outline-none"> Hochladen </button>
-				</div>
-			</div>
+			{/each}
 		</div>
-	</form>
-</div>
+		<button on:click={submitImages}>Submit Images</button>
+	{/if}
+{/await}
