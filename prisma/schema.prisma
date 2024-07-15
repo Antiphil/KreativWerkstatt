@@ -7,17 +7,23 @@ generator client {
 
 datasource db {
   provider = "sqlite"
-  url      = env("DATABASE_URL")
+  url      = env("DATABASE_URLLITE")
 }
 
 model Post {
-  id        String   @id
-  published Boolean @default(true)
+  id        Int      @id @default(autoincrement())
+  published Boolean  @default(true)
   title     String
   artists   String
-  createdAt DateTime @default(now())
-  imageid   String
-  imageid2  String?
-  imageid3  String?
-  imageid4  String?
+  folderID  String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  images    Image[]   @relation("PostImages")
+}
+
+model Image {
+  id     Int    @id @default(autoincrement())
+  url    String
+  postId Int
+  post   Post   @relation("PostImages", fields: [postId], references: [id])
 }

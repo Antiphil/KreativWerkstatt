@@ -1,25 +1,41 @@
-<script lang="ts">
+<script>
 	export let data;
-	const images = data.feed;
-	function chunkArray(array: any, size: any) {
-		const result = [];
-		for (let i = 0; i < array.length; i += size) {
-			result.push(array.slice(i, i + size));
-		}
-		return result;
-	}
-	let imageUrls = images.map((image) => `/uploads/${image.id}/1.png`);
-	let imageGroups = chunkArray(imageUrls, 3);
+	console.log(data.posts);
 </script>
 
-<div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-7xl m-auto mt-20">
-	{#each imageGroups as group}
-		<div class="grid gap-4">
-			{#each group as imageUrl}
-				<div>
-					<img class="h-full w-full rounded-lg object-cover" src={imageUrl} alt="" />
-				</div>
-			{/each}
+<div class="post-grid">
+	{#each data.posts as post}
+		<div class="post-card">
+			<a href={`/posts/${post.id}`}>
+				<img src={post.images[0].url} alt={post.title} />
+				<div>{post.title}</div>
+			</a>
 		</div>
 	{/each}
 </div>
+
+<style>
+	.post-grid {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 16px;
+	}
+	.post-card {
+		width: 200px;
+		border: 1px solid #ddd;
+		border-radius: 8px;
+		overflow: hidden;
+		text-align: center;
+		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+	}
+	.post-card img {
+		width: 100%;
+		height: auto;
+	}
+	.post-card a {
+		display: block;
+		text-decoration: none;
+		color: #333;
+		padding: 8px;
+	}
+</style>

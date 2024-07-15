@@ -1,14 +1,17 @@
-// src/routes/+page.server.ts
-
+// @ts-ignore
+import { PrismaClient } from '@prisma/client';
 import prisma from '$lib/prisma';
-import type { PageServerLoad } from './$types';
 
-export const load = (async () => {
-	// 1.
-	const response = await prisma.post.findMany({
-		where: { published: true }
+export async function load() {
+	const posts = await prisma.post.findMany({
+		include: {
+			images: {
+				take: 1 // Nimmt nur das erste Bild jedes Posts
+			}
+		}
 	});
 
-	// 2.
-	return { feed: response };
-}) satisfies PageServerLoad;
+	return {
+		posts
+	};
+}
