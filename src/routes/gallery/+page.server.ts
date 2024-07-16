@@ -1,6 +1,6 @@
 // @ts-ignore
 import { PrismaClient } from '@prisma/client';
-import prisma from '$lib/prisma';
+import prisma from '$lib/server/prisma';
 
 export async function load() {
 	const posts = await prisma.post.findMany({
