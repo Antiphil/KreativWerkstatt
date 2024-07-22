@@ -1,6 +1,9 @@
 <script lang="ts">
 	import logo from '$lib/assets/images/KreaWe.svg';
 	import banner from '$lib/assets/images/banner.jpg';
+	import type { PageData } from './$types.js';
+	import LoginForm from './login-form.svelte';
+	export let data: PageData;
 </script>
 
 <div class="flex justify-center h-[calc(100%-72px)] items-center bg-black/40">
@@ -14,22 +17,7 @@
 
 			<p class="mt-3 text-xl text-center text-gray-600">Willkommen zurück! 😊</p>
 
-			<div class="mt-4">
-				<label class="block mb-2 text-sm font-medium text-gray-600" for="LoggingEmailAddress">Nutzername</label>
-				<input id="LoggingEmailAddress" class="block w-full px-4 py-2 text-gray-700 bg-white border rounded-lg focus:border-blue-400 focus:ring-opacity-40 focus:outline-none focus:ring focus:ring-blue-300" type="email" />
-			</div>
-
-			<div class="mt-4">
-				<div class="flex justify-between">
-					<label class="block mb-2 text-sm font-medium text-gray-600" for="loggingPassword">Passwort</label>
-				</div>
-
-				<input id="loggingPassword" class="block w-full px-4 py-2 text-gray-700 bg-white border rounded-lg focus:border-blue-400 focus:ring-opacity-40 focus:outline-none focus:ring focus:ring-blue-300" type="password" />
-			</div>
-
-			<div class="mt-6">
-				<button class="w-full px-6 py-3 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-gray-800 rounded-lg hover:bg-gray-700 focus:outline-none focus:ring focus:ring-gray-300 focus:ring-opacity-50"> Einloggen </button>
-			</div>
+			<LoginForm data={data.form} />
 		</div>
 	</div>
 </div>

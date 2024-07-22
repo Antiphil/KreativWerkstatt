@@ -10,15 +10,29 @@ datasource db {
   url      = env("DATABASE_URLLITE")
 }
 
+model User {
+  id            String    @id
+  username      String
+  password_hash String
+  sessions      Session[]
+}
+
+model Session {
+  id        String   @id
+  userId    String
+  expiresAt DateTime
+  user      User     @relation(references: [id], fields: [userId], onDelete: Cascade)
+}
+
 model Post {
   id        Int      @id @default(autoincrement())
   published Boolean  @default(true)
   title     String
   artists   String
   folderID  String
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  images    Image[]   @relation("PostImages")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  images    Image[]  @relation("PostImages")
 }
 
 model Image {
