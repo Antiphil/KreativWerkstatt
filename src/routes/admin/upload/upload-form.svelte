@@ -21,16 +21,16 @@
 	const handleFileChange = async (event: Event) => {
 		loading = true;
 		const target = event.target as HTMLInputElement;
+
 		const selectedFiles = target.files;
+
 		if (selectedFiles) {
 			const filesArray = Array.from(selectedFiles);
 			files = files.concat(filesArray);
 			const base64Array = await Promise.all(filesArray.map((file) => getBase64(file)));
 			preview = preview.concat(base64Array as string[]);
-		}
-		if (target.files) {
 			formData.update((formValues) => {
-				formValues.images = files;
+				formValues.images = Array.from(target.files as FileList) as File[];
 				return formValues;
 			});
 		}
@@ -54,6 +54,12 @@
 			formValues.images = files;
 			return formValues;
 		});
+		const fileInput = document.querySelector('input[type="file"]') as HTMLInputElement;
+		if (fileInput) {
+			const dataTransfer = new DataTransfer();
+			files.forEach((file) => dataTransfer.items.add(file));
+			fileInput.files = dataTransfer.files;
+		}
 	};
 </script>
 
