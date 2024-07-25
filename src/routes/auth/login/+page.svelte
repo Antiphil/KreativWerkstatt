@@ -1,12 +1,15 @@
 <script lang="ts">
 	import logo from '$lib/assets/images/KreaWe.svg';
 	import banner from '$lib/assets/images/banner.jpg';
+	import { applyAction, enhance } from '$app/forms';
 	import type { PageData } from './$types.js';
 	import LoginForm from './login-form.svelte';
 	export let data: PageData;
+	import { toast } from 'svelte-sonner';
+	import { Button } from '$lib/components/ui/button/index.js';
 </script>
 
-<div class="flex justify-center h-[calc(100%-72px)] items-center bg-black/40">
+<div class="flex justify-center h-[calc(100vh-72px)] items-center bg-black/40">
 	<div class="flex w-full max-w-sm mx-auto overflow-hidden bg-white rounded-lg shadow-lg lg:max-w-4xl">
 		<div class="hidden bg-cover bg-center lg:block lg:w-1/2" style="background-image: url('{banner}');"></div>
 
@@ -20,4 +23,17 @@
 			<LoginForm data={data.form} />
 		</div>
 	</div>
+	<Button
+		variant="outline"
+		on:click={() =>
+			toast.success('Event has been created', {
+				description: 'Sunday, December 03, 2023 at 9:00 AM',
+				action: {
+					label: 'Undo',
+					onClick: () => console.info('Undo')
+				}
+			})}
+	>
+		Show Toast
+	</Button>
 </div>

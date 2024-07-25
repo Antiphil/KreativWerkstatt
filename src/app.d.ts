@@ -8,8 +8,8 @@ declare global {
 		// interface PageState {}
 		// interface Platform {}
 		interface Locals {
-			user: import("lucia").User | null;
-			session: import("lucia").Session | null;
+			pb: import('pocketbase').default;
+			user: import('pocketbase').default['authStore']['model'];
 		}
 	}
 }

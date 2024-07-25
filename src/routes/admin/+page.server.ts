@@ -1,4 +1,4 @@
-import fs from 'fs/promises';
+/* import fs from 'fs/promises';
 import path from 'path';
 import prisma from '$lib/server/prisma';
 import type { PageServerLoad } from './$types';
@@ -30,3 +30,4 @@ export const actions = {
 		}
 	}
 };
+ */

@@ -1,5 +1,5 @@
 // @ts-ignore
-import { PrismaClient } from '@prisma/client';
+/* import { PrismaClient } from '@prisma/client';
 import prisma from '$lib/server/prisma';
 
 export async function load() {
@@ -14,4 +14,4 @@ export async function load() {
 	return {
 		posts
 	};
-}
+} */

@@ -1,17 +1,22 @@
 <script>
-	export let data;
-	console.log(data.posts);
+	/* export let data;
+	console.log(data.posts); */
 </script>
 
 <div class="post-grid">
-	{#each data.posts as post}
-		<div class="post-card">
-			<a href={`/posts/${post.id}`}>
-				<img src={post.images[0].url} alt={post.title} />
-				<div>{post.title}</div>
-			</a>
-		</div>
-	{/each}
+	loading data
+	<!-- {#if data.posts.length > 1}
+		{#each data.posts as post}
+			<div class="post-card">
+				<a href={`/posts/${post.id}`}>
+					<img src={post.images[0].url} alt={post.title} />
+					<div>{post.title}</div>
+				</a>
+			</div>
+		{/each}
+	{:else}
+		loading gallery
+	{/if} -->
 </div>
 
 <style>
