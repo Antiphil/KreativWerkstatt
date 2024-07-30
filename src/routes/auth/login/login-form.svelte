@@ -8,16 +8,6 @@
 
 	export let data: SuperValidated<Infer<FormSchema>>;
 
-	const promise = new Promise((resolve, reject) =>
-		setTimeout(() => {
-			if (Math.random() > 0.5) {
-				resolve({ name: 'Svelte Sonner' });
-			} else {
-				reject();
-			}
-		}, 3500)
-	);
-
 	const form = superForm(data, {
 		validators: zodClient(formSchema),
 		onSubmit: () => {
@@ -34,7 +24,7 @@
 	const { form: formData, enhance } = form;
 </script>
 
-<form method="POST" use:enhance>
+<form method="POST" use:enhance class="space-y-3">
 	<Form.Field {form} name="username">
 		<Form.Control let:attrs>
 			<Form.FieldErrors />

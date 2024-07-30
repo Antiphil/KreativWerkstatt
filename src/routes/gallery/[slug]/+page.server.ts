@@ -1,13 +1,12 @@
-// @ts-ignore
-import { PrismaClient } from '@prisma/client';
-import prisma from '$lib/server/prisma';
+import { pb } from '$lib/utils/pocketbase.js';
+import type { PageServerLoad } from './$types.js';
 
-export async function load({ params }) {
-	const post = await prisma.post.findUnique({
-		where: { id: parseInt(params.slug) },
-		include: { images: true }
-	});
+export const load: PageServerLoad = async ({ params }) => {
+	let posts = await pb.collection('posts').getOne(params.slug);
 	return {
-		post
+		props: {
+			posts,
+			slug: params.slug
+		}
 	};
-}
+};

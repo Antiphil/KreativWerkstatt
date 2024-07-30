@@ -1,22 +1,21 @@
 <script>
-	/* export let data;
-	console.log(data.posts); */
+	export let data;
+	console.log(data.props.posts);
 </script>
 
 <div class="post-grid">
-	loading data
-	<!-- {#if data.posts.length > 1}
-		{#each data.posts as post}
+	{#if data.props.posts.length > 1}
+		{#each data.props.posts as post}
 			<div class="post-card">
-				<a href={`/posts/${post.id}`}>
-					<img src={post.images[0].url} alt={post.title} />
+				<a href={`/gallery/${post.id}`}>
+					<img src="http://127.0.0.1:8090/api/files/posts/{post.id}/{post.images[0]}" alt={post.title} />
 					<div>{post.title}</div>
 				</a>
 			</div>
 		{/each}
 	{:else}
 		loading gallery
-	{/if} -->
+	{/if}
 </div>
 
 <style>

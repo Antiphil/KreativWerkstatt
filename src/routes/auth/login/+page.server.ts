@@ -20,12 +20,12 @@ export const actions: Actions = {
 			password: string;
 		};
 		try {
-			// Füge hier deine Authentifizierungslogik hinzu
+			//await locals.pb.admins.authWithPassword(data.username, data.password);
 			await locals.pb.collection('users').authWithPassword(data.username, data.password);
+			redirect(303, '/admin');
 		} catch (e) {
 			console.error(e);
 			throw e;
 		}
-		redirect(303, '/admin');
 	}
 };

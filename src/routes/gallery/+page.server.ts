@@ -1,17 +1,13 @@
-// @ts-ignore
-/* import { PrismaClient } from '@prisma/client';
-import prisma from '$lib/server/prisma';
+import { pb } from '$lib/utils/pocketbase.js';
+import type { PageServerLoad } from './$types.js';
 
-export async function load() {
-	const posts = await prisma.post.findMany({
-		include: {
-			images: {
-				take: 1 // Nimmt nur das erste Bild jedes Posts
-			}
-		}
+export const load: PageServerLoad = async () => {
+	let posts = await pb.collection('posts').getFullList({
+		sort: '-created'
 	});
-
 	return {
-		posts
+		props: {
+			posts
+		}
 	};
-} */
+};

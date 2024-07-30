@@ -9,8 +9,8 @@
 	import { Button } from '$lib/components/ui/button/index.js';
 </script>
 
-<div class="flex justify-center h-[calc(100vh-72px)] items-center bg-black/40">
-	<div class="flex w-full max-w-sm mx-auto overflow-hidden bg-white rounded-lg shadow-lg lg:max-w-4xl">
+<div class="flex justify-center h-[calc(100vh-72px)] items-center">
+	<div class="flex w-full max-w-sm mx-auto overflow-hidden bg-[#fffde8] rounded-lg shadow-lg lg:max-w-4xl">
 		<div class="hidden bg-cover bg-center lg:block lg:w-1/2" style="background-image: url('{banner}');"></div>
 
 		<div class="w-full px-6 py-8 md:px-8 lg:w-1/2">
@@ -18,7 +18,7 @@
 				<img class="w-auto h-20" src={logo} alt="" />
 			</div>
 
-			<p class="mt-3 text-xl text-center text-gray-600">Willkommen zurück! 😊</p>
+			<p class="mt-3 text-xl text-center text-gray-600 mb-3">Willkommen zurück! 😊</p>
 
 			<LoginForm data={data.form} />
 		</div>
