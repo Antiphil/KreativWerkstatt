@@ -1,5 +1,5 @@
 import type { PageServerLoad, Actions } from './$types.js';
-import { fail } from '@sveltejs/kit';
+import { fail, redirect } from '@sveltejs/kit';
 import { superValidate } from 'sveltekit-superforms';
 import { formSchema } from './schema';
 import { zod } from 'sveltekit-superforms/adapters';
@@ -27,9 +27,7 @@ export const actions: Actions = {
 		}
 		try {
 			await pb.collection('artists').create(data);
-			return {
-				formData
-			};
+			throw redirect(303, '/admin/artists');
 		} catch (e) {
 			console.error(e);
 			throw e;

@@ -33,20 +33,20 @@
 
 				<!-- Mobile Menu open: "block", Menu closed: "hidden" -->
 				<div class="absolute inset-x-0 z-20 w-full px-6 py-4 transition-all duration-300 ease-in-out bg-white dark:bg-gray-800 lg:mt-0 lg:p-0 lg:top-0 lg:relative lg:bg-transparent lg:w-auto lg:opacity-100 lg:translate-x-0 lg:flex lg:items-center">
-					<div class="flex flex-col -mx-6 lg:flex-row lg:items-center lg:mx-8">
+					<div class="flex flex-col -mx-6 lg:flex-row lg:items-center mr-2">
 						<a href="/" class="px-3 py-2 mx-3 mt-2 text-gray-700 transition-colors duration-300 transform rounded-md lg:mt-0 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700">Startseite</a>
 						<a href="/gallery" class="px-3 py-2 mx-3 mt-2 text-gray-700 transition-colors duration-300 transform rounded-md lg:mt-0 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700">Galerie</a>
+						<a href="/about" class="px-3 py-2 mx-3 mt-2 text-gray-700 transition-colors duration-300 transform rounded-md lg:mt-0 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700">Über uns</a>
 						<a href="/contact" class="px-3 py-2 mx-3 mt-2 text-gray-700 transition-colors duration-300 transform rounded-md lg:mt-0 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700">Kontakt</a>
-						<a href="/impressum" class="px-3 py-2 mx-3 mt-2 text-gray-700 transition-colors duration-300 transform rounded-md lg:mt-0 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700">Impressum</a>
+						<!-- <a href="/auth/login" class="px-3 py-2 mx-3 mt-2 text-gray-700 transition-colors duration-300 transform rounded-md lg:mt-0 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700">Login</a> -->
 						{#if $currentUser}
-							<a href="/admin" class="px-3 py-2 mx-3 mt-2 text-gray-700 transition-colors duration-300 transform rounded-md lg:mt-0 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700">Admin</a>
-							<button on:click={() => goto('/auth/logout')} class="px-3 py-2 mx-3 mt-2 text-gray-700 transition-colors duration-300 transform rounded-md lg:mt-0 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700">Abmelden</button>
+							<a href="/admin" class="px-3 py-2 mx-3 mt-2 text-gray-700 transition-colors duration-300 transform rounded-md lg:mt-0 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700">Verwaltung</a>
 						{/if}
 					</div>
 
 					<div class="flex items-center mt-4 lg:mt-0">
 						{#if $currentUser}
-							<button type="button" class="flex items-center focus:outline-none" aria-label="toggle profile dropdown">
+							<button on:click={() => goto('/auth/logout')} type="button" class="flex items-center focus:outline-none" aria-label="toggle profile dropdown">
 								<div class="w-8 h-8 p-1 overflow-hidden border-2 border-gray-400 rounded-full">
 									<img src="http://127.0.0.1:8090/api/files/_pb_users_auth_/szl0bq19gl5yoxh/{$currentUser.avatar}" class="object-cover w-full h-full" alt="avatar" />
 								</div>
