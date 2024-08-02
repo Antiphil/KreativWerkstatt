@@ -11,7 +11,7 @@
 <div class="container !px-0">
 	<div>
 		<main class="">
-			<div class="flex items-baseline justify-between border-b border-gray-200 pb-6">
+			<div class="flex items-baseline justify-between border-b border-white pb-6">
 				<h1 class="text-4xl font-bold tracking-tight text-gray-900">Unsere Produkte</h1>
 
 				<div class="flex items-center">
@@ -42,7 +42,7 @@
 				<div class="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-5">
 					<!-- Filters -->
 					<form class="hidden lg:block">
-						<div class="border-b border-gray-200 py-6">
+						<div class="border-b border-white py-6">
 							<h3 class="-my-3 flow-root">
 								<!-- Expand/collapse section button -->
 								<button type="button" class="flex w-full items-center justify-between py-3 text-sm text-gray-400 hover:text-gray-500" aria-controls="filter-section-0" aria-expanded="false">
@@ -54,8 +54,8 @@
 								<div class="space-y-4">
 									{#each categories as categorie, index}
 										<div class="flex items-center">
-											<input id={categorie.id} type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" />
-											<label for={categorie.id} class="ml-3 text-sm text-gray-600">{categorie.label}</label>
+											<input id={categorie.id} type="checkbox" class="h-4 w-4 rounded border-gray-800 border-1 text-secondary focus:ring-indigo-500" />
+											<label for={categorie.id} class="ml-3 text-sm">{categorie.label}</label>
 										</div>
 									{/each}
 								</div>
@@ -69,7 +69,7 @@
 							{#if data.props.posts.length > 1}
 								{#each data.props.posts as post}
 									<a href="/gallery/post/{post.id}">
-										<div class=" break-inside-avoid mb-8 rounded-2xl overflow-hidden border-4 border-yellow-200">
+										<div class=" break-inside-avoid mb-8 rounded-2xl overflow-hidden border-4 border-white/60 bg-white">
 											<img class="h-auto max-w-full w-full rounded-lg hover:scale-[1.03] transition-all" src="http://127.0.0.1:8090/api/files/posts/{post.id}/{post.images[0]}" alt={post.title} />
 										</div>
 									</a>

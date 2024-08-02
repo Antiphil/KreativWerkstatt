@@ -14,7 +14,7 @@
 
 <div class="h-full">
 	<Nav />
-	<div class="min-h-screen mt-24"><slot /></div>
+	<div class="min-h-screen py-28"><slot /></div>
 
 	<Footer />
 </div>

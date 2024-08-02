@@ -8,12 +8,8 @@
 	import { browser } from '$app/environment';
 	import { zodClient } from 'sveltekit-superforms/adapters';
 	import { Checkbox } from '$lib/components/ui/checkbox/index.js';
-	import Check from 'lucide-svelte/icons/check';
-	import ChevronsUpDown from 'lucide-svelte/icons/chevrons-up-down';
 	import { tick } from 'svelte';
 	import { categories, artists } from './schema';
-	import { buttonVariants } from '$lib/components/ui/button/index.js';
-	import Button from '$lib/components/ui/button/button.svelte';
 
 	export let data: SuperValidated<Infer<FormSchema>>;
 
@@ -175,8 +171,8 @@
 		<h1 class="my-3">Schritt 2: Beteilige Mitarbeiter</h1>
 		<Form.Fieldset {form} name="artist" class="space-y-0">
 			<div class="mb-3">
-				<Form.Legend class="text-base">Kategorien</Form.Legend>
-				<Form.Description>Wähle die Kategorien die dein gewähltes Produkt am besten treffen</Form.Description>
+				<Form.Legend class="text-base">Mitarbeiter</Form.Legend>
+				<Form.Description>Bitte kreuze an, wer an dem Produkt mitgearbeitet hat.</Form.Description>
 			</div>
 			<div class="space-y-2">
 				{#each artists as item}
