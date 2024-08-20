@@ -1,5 +1,6 @@
 <script lang="ts">
 	import * as Form from '$lib/components/ui/form/index.js';
+	import { Button } from '$lib/components/ui/button';
 	import * as Popover from '$lib/components/ui/popover/index.js';
 	import * as Command from '$lib/components/ui/command/index.js';
 	import { Input } from '$lib/components/ui/input';
@@ -10,11 +11,20 @@
 	import { Checkbox } from '$lib/components/ui/checkbox/index.js';
 	import { tick } from 'svelte';
 	import { categories, artists } from './schema';
+	import { toast } from 'svelte-sonner';
+	import { goto } from '$app/navigation';
+	import { artistStore, categorieStore, titleStore, imageStore } from '$lib/stores/upload';
 
 	export let data: SuperValidated<Infer<FormSchema>>;
 
 	const form = superForm(data, {
-		validators: zodClient(formSchema)
+		validators: zodClient(formSchema),
+		onUpdated({ form }) {
+			if (form.message) {
+				toast.success(form.message);
+				goto('/admin');
+			}
+		}
 	});
 
 	const { form: formData, enhance } = form;
@@ -122,120 +132,120 @@
 	</ol>
 
 	<form method="POST" use:enhance enctype="multipart/form-data">
-		<!-- {#if step === 1} -->
-		<h1 class="my-3">Schritt 1: Titel & Kategorie</h1>
+		{#if step === 1}
+			<h1 class="my-3">Schritt 1: Titel & Kategorie</h1>
 
-		<Form.Field {form} name="productTitle">
-			<Form.Control let:attrs>
-				<Form.Label class="text-base mb-0">Titel des Produkts</Form.Label>
-				<Form.Description>Wähle einen passenden Namen für das Produkt</Form.Description>
-				<Input {...attrs} bind:value={$formData.productTitle} />
-			</Form.Control>
-			<Form.FieldErrors />
-		</Form.Field>
-
-		<Form.Fieldset {form} name="categorie" class="space-y-0">
-			<div class="mb-3">
-				<Form.Legend class="text-base">Kategorien</Form.Legend>
-				<Form.Description>Wähle die Kategorien die dein gewähltes Produkt am besten treffen</Form.Description>
-			</div>
-			<div class="space-y-2">
-				{#each categories as item}
-					{@const checked = $formData.categorie.includes(item.id)}
-					<div class="flex flex-row items-start space-x-3">
-						<Form.Control let:attrs>
-							<Checkbox
-								{...attrs}
-								{checked}
-								onCheckedChange={(v) => {
-									if (v) {
-										addItem(item.id);
-									} else {
-										removeItem(item.id);
-									}
-								}}
-							/>
-							<Form.Label class="font-normal">
-								{item.label}
-							</Form.Label>
-							<input hidden type="checkbox" name={attrs.name} value={item.id} {checked} />
-						</Form.Control>
-					</div>
-				{/each}
+			<Form.Field {form} name="productTitle">
+				<Form.Control let:attrs>
+					<Form.Label class="text-base mb-0">Titel des Produkts</Form.Label>
+					<Form.Description>Wähle einen passenden Namen für das Produkt</Form.Description>
+					<Input {...attrs} bind:value={$formData.productTitle} />
+				</Form.Control>
 				<Form.FieldErrors />
-			</div>
-		</Form.Fieldset>
-		<!-- {/if}
+			</Form.Field>
 
-		{#if step === 2} -->
-		<h1 class="my-3">Schritt 2: Beteilige Mitarbeiter</h1>
-		<Form.Fieldset {form} name="artist" class="space-y-0">
-			<div class="mb-3">
-				<Form.Legend class="text-base">Mitarbeiter</Form.Legend>
-				<Form.Description>Bitte kreuze an, wer an dem Produkt mitgearbeitet hat.</Form.Description>
-			</div>
-			<div class="space-y-2">
-				{#each artists as item}
-					{@const checked = $formData.artist.includes(item.id)}
-					<div class="flex flex-row items-start space-x-3">
-						<Form.Control let:attrs>
-							<Checkbox
-								{...attrs}
-								{checked}
-								onCheckedChange={(v) => {
-									if (v) {
-										addItemArtist(item.id);
-									} else {
-										removeItemArtist(item.id);
-									}
-								}}
-							/>
-							<Form.Label class="font-normal">
-								{item.firstname}
-								{item.lastname}
-							</Form.Label>
-							<input hidden type="checkbox" name={attrs.name} value={item.id} {checked} />
-						</Form.Control>
-					</div>
-				{/each}
-				<Form.FieldErrors />
-			</div>
-		</Form.Fieldset>
-		<!-- {/if}
-		{#if step === 3} -->
-		<h1 class="my-3">Schritt 3: Bildauswahl</h1>
+			<Form.Fieldset {form} name="categorie" class="space-y-0">
+				<div class="mb-3">
+					<Form.Legend class="text-base">Kategorien</Form.Legend>
+					<Form.Description>Wähle die Kategorien die dein gewähltes Produkt am besten treffen</Form.Description>
+				</div>
+				<div class="space-y-2">
+					{#each categories as item}
+						{@const checked = $formData.categorie.includes(item.id)}
+						<div class="flex flex-row items-start space-x-3">
+							<Form.Control let:attrs>
+								<Checkbox
+									{...attrs}
+									{checked}
+									onCheckedChange={(v) => {
+										if (v) {
+											addItem(item.id);
+										} else {
+											removeItem(item.id);
+										}
+									}}
+								/>
+								<Form.Label class="font-normal">
+									{item.label}
+								</Form.Label>
+								<input hidden type="checkbox" name={attrs.name} value={item.id} {checked} />
+							</Form.Control>
+						</div>
+					{/each}
+					<Form.FieldErrors />
+				</div>
+			</Form.Fieldset>
+		{/if}
 
-		<Form.Field {form} name="images">
-			<Form.Control let:attrs>
-				<Form.Label class="font-bold">Bilder Hochladen</Form.Label>
-				<Form.Description>Wähle bis zu 4 Bilder des Produktes, die du hochladen möchtest</Form.Description>
-				<Form.FieldErrors />
-				<Input type="file" multiple {...attrs} name="images" accept="image/png, image/jpeg, image/jpg" on:change={handleFileChange} />
-			</Form.Control>
-		</Form.Field>
+		{#if step === 2}
+			<h1 class="my-3">Schritt 2: Beteilige Mitarbeiter</h1>
+			<Form.Fieldset {form} name="artist" class="space-y-0">
+				<div class="mb-3">
+					<Form.Legend class="text-base">Mitarbeiter</Form.Legend>
+					<Form.Description>Bitte kreuze an, wer an dem Produkt mitgearbeitet hat.</Form.Description>
+				</div>
+				<div class="space-y-2">
+					{#each artists as item}
+						{@const checked = $formData.artist.includes(item.id)}
+						<div class="flex flex-row items-start space-x-3">
+							<Form.Control let:attrs>
+								<Checkbox
+									{...attrs}
+									{checked}
+									onCheckedChange={(v) => {
+										if (v) {
+											addItemArtist(item.id);
+										} else {
+											removeItemArtist(item.id);
+										}
+									}}
+								/>
+								<Form.Label class="font-normal">
+									{item.firstname}
+									{item.lastname}
+								</Form.Label>
+								<input hidden type="checkbox" name={attrs.name} value={item.id} {checked} />
+							</Form.Control>
+						</div>
+					{/each}
+					<Form.FieldErrors />
+				</div>
+			</Form.Fieldset>
+		{/if}
+		{#if step === 3}
+			<h1 class="my-3">Schritt 3: Bildauswahl</h1>
 
-		<div class="flex flex-col gap-3 justify-center">
-			{#await Promise.resolve(loading) then}
-				{#if loading}
-					<p>Loading...</p>
-				{/if}
-				{#if !loading && preview.length > 0}
-					<div class="flex justify-center mt-5 gap-3 [&>div]:first:border-4 first:[&>div]:border-red-500">
-						{#each preview as image, index}
-							<div class="w-24 h-24 border rounded-lg relative">
-								<img src={image} alt="Preview" class="w-full h-full object-cover rounded-lg" />
-								<button on:click={() => removeImage(index)} type="button" class="text-red-400 fa-solid fa-trash absolute top-1 right-1"></button>
-							</div>
-						{/each}
-					</div>
-					<span class="">Das erste Bild mit dem roten Rahmen dient als Vorschaubild für das ganze Produkt</span>
-				{/if}
-			{/await}
-		</div>
-		<!-- {/if} -->
+			<Form.Field {form} name="images">
+				<Form.Control let:attrs>
+					<Form.Label class="font-bold">Bilder Hochladen</Form.Label>
+					<Form.Description>Wähle bis zu 4 Bilder des Produktes, die du hochladen möchtest</Form.Description>
+					<Form.FieldErrors />
+					<Input type="file" multiple {...attrs} name="images" accept="image/png, image/jpeg, image/jpg" on:change={handleFileChange} />
+				</Form.Control>
+			</Form.Field>
+
+			<div class="flex flex-col gap-3 justify-center">
+				{#await Promise.resolve(loading) then}
+					{#if loading}
+						<p>Loading...</p>
+					{/if}
+					{#if !loading && preview.length > 0}
+						<div class="flex justify-center mt-5 gap-3 [&>div]:first:border-4 first:[&>div]:border-red-500">
+							{#each preview as image, index}
+								<div class="w-24 h-24 border rounded-lg relative">
+									<img src={image} alt="Preview" class="w-full h-full object-cover rounded-lg" />
+									<button on:click={() => removeImage(index)} type="button" class="text-red-400 fa-solid fa-trash absolute top-1 right-1"></button>
+								</div>
+							{/each}
+						</div>
+						<span class="">Das erste Bild mit dem roten Rahmen dient als Vorschaubild für das ganze Produkt</span>
+					{/if}
+				{/await}
+			</div>
+		{/if}
 
 		<div class="flex justify-between">
-			<!-- {#if step <= 1}
+			{#if step <= 1}
 				<Button disabled>Zurück</Button>
 			{/if}
 			{#if step >= 2}
@@ -244,9 +254,9 @@
 			{#if step < 3}
 				<Button on:click={() => (step += 1)}>Weiter</Button>
 			{/if}
-			{#if step >= 3} -->
-			<Form.Button>Hochladen</Form.Button>
-			<!-- {/if} -->
+			{#if step >= 3}
+				<Form.Button>Hochladen</Form.Button>
+			{/if}
 		</div>
 	</form>
 </div>
