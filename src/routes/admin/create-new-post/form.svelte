@@ -1,8 +1,7 @@
 <script lang="ts">
 	import * as Form from '$lib/components/ui/form/index.js';
 	import { Button } from '$lib/components/ui/button';
-	import * as Popover from '$lib/components/ui/popover/index.js';
-	import * as Command from '$lib/components/ui/command/index.js';
+
 	import { Input } from '$lib/components/ui/input';
 	import { formSchema, type FormSchema } from './schema';
 	import SuperDebug, { type Infer, type SuperValidated, superForm } from 'sveltekit-superforms';
